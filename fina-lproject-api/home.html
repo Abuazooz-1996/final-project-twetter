@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>final-project</title>
+</head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+<style>
+    body{
+        background-color: #f0ecff;
+    }
+    .card{
+        margin-bottom: 30px;
+
+    }
+    .hide{
+        visibility: hidden;
+        opacity: 1;
+    }
+    #logout{
+        display: none;
+    }
+    .alert-message{
+        position: fixed;
+        bottom: 2px;
+        right: 0;
+        padding: 20px;
+        width: 345px;
+        z-index: 99999;
+        border-radius: 6px;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        font-size: 19px;
+        visibility: hidden;
+    }
+    .plusbtn{
+        width: 50px;
+        bottom: 15px;
+        position: fixed;
+        right: 15px;
+        border-radius: 50%;
+        cursor: pointer;
+        visibility: hidden;
+    }
+
+    .add_post{
+        position: fixed;
+        background: #00000082;
+        width: 100%;
+        height: 100%;
+        z-index: 99999;
+        display: flex;
+        justify-content: center;
+        visibility: hidden;
+        .inputs_add{
+            background: #9E9E9E;
+            margin: 80px auto 200px;
+            width: 400px;
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            div{
+                p{
+                    display: flex;
+                    justify-content: center;
+                    margin-bottom: 0;
+                }
+            }
+            .conform-btn{
+                background: #5b5bca;
+                padding: 7px;
+                color: #ffffff;
+                border-radius: 6px;
+                cursor: pointer;
+                box-shadow: 3px 5px 6px 0px #00000099;
+                width: 120px;
+
+            }
+        }
+    }
+    .conform-btn:hover{
+        background: #4747ce !important;
+    }
+    .add_post-btns{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        gap: 15px;
+        margin-bottom: -15px;
+    }
+    .cancel-btn{
+        background: #F44336;
+        padding: 7px;
+        color: #ffffff;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-right: 7px;
+        box-shadow: 3px 5px 6px 0px #00000099;
+        width: 120px;
+
+    }
+    .cancel-btn:hover{
+        background: #f61414 !important;
+    }
+
+</style>
+<body >
+    <!-- //model -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Login </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                    <label for="recipient-name" class="col-form-label">Username:</label>
+                    <input type="text" class="form-control username" id="recipient-name " value="Ahmed">
+                    </div>
+                    <div class="mb-3">
+                    <label for="message-text" class="col-form-label">Password:</label>
+                    <input type="password" class="form-control password" id="recipient-name " value="123456">
+                    </div>
+                </form>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="login-btn">Login</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    <!-- //model -->
+    <!-- //alert -->
+     <div class="alert-message fade show">
+     </div>
+    <!-- //alert -->
+    <!-- //plus butten -->
+     <div >
+      <img class="plusbtn"  onclick="add_post()" src="./images/pngtree-vector-add-icon-png-image_992290.jpg" alt="">
+     </div>
+    <!--  //plus butten  -->
+    <!--  //show add post  -->
+      <div class="add_post">
+        <div class="inputs_add" >
+            <div>
+                <p>Title</p>
+                <input   class="title_input" type="text">
+            </div>
+            <div >
+                <p>Body</p>
+                <input  class="body_input" type="text">
+            </div>
+            <div >
+                <p>Profile Image</p>
+                <input  class="prof_img_input"  type="file" accept="image" value="">
+            </div>
+            <div class="add_post-btns">
+                <p onclick="confirm_add_post()" class="conform-btn">Conform</p>
+                <p onclick="cancel_add_post()" class="cancel-btn">Cancel</p>
+            </div>
+        </div>
+      </div>
+    <!--  show add post  -->
+
+
+
+    <div class="container  ">
+        <div class="d-flex justify-content-center">
+            <div class=" col-9">
+                <nav class="navbar navbar-expand-lg bg-body-tertiary shadow rounded pt-3">
+                    <div class="container-fluid">
+                      <a class="navbar-brand" href="#">Hizam</a>
+                      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+                      <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav">
+                          <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="#">Progile</a>
+                          </li>
+                        </ul>
+                        <div class="d-flex  w-100 justify-content-end"id="enterance-btn">
+                            <button type="button" class="btn btn-outline-success mx-2" data-bs-toggle="modal" data-bs-target="#exampleModal">Login</button>
+                            <button type="button" class="btn btn-outline-success">Register</button>
+                        </div>
+                        <div class=" w-100 justify-content-end" id="logout">
+                            <div class="card-header mx-2">
+                                <img src="./images/skills-01.jpg" class="rounded-circle border border-2"  style="width: 40px; height:40px">
+                              </div>
+                            <button onclick="logout()" type="button" class="btn btn-outline-danger" >Logout</button>
+                        </div>
+                        
+                      </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <div class="container ">
+        <div class="d-flex justify-content-center mt-5">
+            <div class="col-9">
+                <div class="posts">
+                    <div class="card shadow">
+                        <div class="card-header">
+                          <img src="./images/skills-01.jpg" class="rounded-circle border border-2"  style="width: 40px; height:40px">
+                          <b>@Yarham</b>
+                        </div>
+                        <div class="card-body">
+                            <img src="./images/shuffle-01.jpg" class="w-100" alt="">
+                            <h6 style="color: rgb(162, 156, 156);" class="mt-1">2min ago</h6>
+                            <h5>Hello world</h5>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum aliquid molestias eius amet excepturi quas accusamus id, ducimus, ut odio corrupti. Earum explicabo expedita quo sunt accusamus sint ex blanditiis.</p>
+                            <hr>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                                <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+                            </svg>
+                            <span>
+                                (3) comments
+                            </span>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+
+        </div>
+   
+
+     
+        <!-- Content here -->
+    </div>
+</body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+    add_posts()
+    document.querySelector(".posts").innerHTML+=localStorage.getItem("card")
+    function add_posts(){
+        const baseurl="https://tarmeezacademy.com/api/v1/posts"
+        axios.get(baseurl)
+        .then((response)=>{
+            console.log(response)
+            localStorage.setItem("token",JSON.stringify(response))
+    
+           // console.log(response.data)
+           // console.log(response.data.data)
+           // console.log(response.data.data[2])
+           // console.log(response.data.data[2].author)
+            //console.log(response.data.data[2].author.name)
+            //document.querySelector(".card-header b").innerHTML=response.data.data[2].author.name
+            //console.log(response.data.data[2].body)
+           // console.log(response.data.data[2].image)
+    
+            let dates=response.data.data;
+            console.log(document.querySelector(".posts"))
+            //document.querySelector(".posts").innerHTML=""
+            for(let i=0; i<dates.length;i++ ){
+                //console.log(date[1].author.name)
+    
+                // if noemal first way        
+               // let posttitle=""
+                //if(date.title!=null){
+               // posttitle=date.title"
+                //}
+                let card=`
+                    <div class="card shadow">
+                        <div class="card-header">
+                           <img src="${dates[i].author.profile_image}" class="rounded-circle border border-2"  style="width: 40px; height:40px">
+                           <b>@${dates[i].author.username}</b>
+                        </div>
+                        <div class="card-body">
+                            <img src="${dates[i].image}" class="w-100" alt="">
+                            <h6 style="color: rgb(162, 156, 156);" class="mt-1">${dates[i].created_at}</h6>
+                            <h5>${dates[i].title}</h5>
+                            <p>${dates[i].body}</p>
+                            <hr>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                                <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+                            </svg>
+                            <span>
+                                (${dates[i].comments_count}) comments
+                            </span>
+                        </div>
+                    </div> 
+                `
+               document.querySelector(".posts").innerHTML+=card
+            }
+        })
+    }
+
+    
+
+    document.querySelector("#login-btn").addEventListener("click",login)
+    function login(){
+        username=document.querySelector(".username").value
+        password=document.querySelector(".password").value
+        console.log(username,password)
+        const prams={
+             "username" : username,
+             "password": password
+        }
+        const url="https://tarmeezacademy.com/api/v1/posts/login"
+
+        axios.post(url,prams)
+        .then((response)=>{
+            console.log(response.data)
+
+        })
+        .catch((error)=>{
+            console.log("error happened")
+            console.log(error.data)
+            localStorage.removeItem("token")
+            if(username!="")localStorage.setItem("token",username)
+            //document.querySelector("#exampleModal").classList.add("hide")
+            const login=document.querySelector("#exampleModal")
+            const modalinstsnce=bootstrap.Modal.getInstance(login)
+            modalinstsnce.hide(login)
+            document.querySelector(".plusbtn").style.visibility="visible"
+            show_alert("Nice, Logged in successfully")
+            swich_login_logout()
+        })
+
+    }
+
+
+    function logout(){
+        show_alert("Logged out successfully","red")
+        localStorage.removeItem("token")
+        swich_login_logout()
+        document.querySelector(".plusbtn").style.visibility="hidden"
+
+
+    }
+    function swich_login_logout(){
+        if(localStorage.getItem("token")!=null){
+            document.querySelector("#enterance-btn").style.setProperty("visibility","hidden")
+            document.querySelector("#logout").style.setProperty("display","flex")
+        }
+        else{
+            document.querySelector("#enterance-btn").style.setProperty("visibility","visible")
+            document.querySelector("#logout").style.setProperty("display","none")
+        }
+    }
+
+
+    function show_alert(message,type="#96c397"){
+        const alert_message=document.querySelector(".alert-message")
+        alert_message.innerHTML=""
+        alert_message.style.visibility="visible"
+        alert_message.style.background=type
+        const alert_p=document.createElement("p");
+        alert_p.id="new"
+        alert_p.innerHTML=message
+        alert_message.appendChild(alert_p)
+        setTimeout(()=>{
+            document.querySelector(".alert-message").style.visibility="hidden";
+        },2000)
+    }
+
+    function add_post(){
+        console.log("added")
+        document.querySelector(".add_post").style.visibility="visible"
+    }
+
+    function cancel_add_post(){
+        document.querySelector(".add_post").style.visibility="hidden"
+
+    }
+
+    cards=[];
+    function confirm_add_post(){
+        title_input=document.querySelector(".title_input ")
+        body_input=document.querySelector(".body_input ")
+        prof_img_input=document.querySelector(".prof_img_input")
+
+        console.log(title_input.value)
+        console.log(body_input.value)
+        console.log(prof_img_input.value)
+ 
+
+
+        //add_post_new
+            let card=`
+            <div class="card shadow">
+                <div class="card-header">
+                <img src="${prof_img_input.value}" class="rounded-circle border border-2"  style="width: 40px; height:40px">
+                <b>@${title_input.value}</b>
+                </div>
+                <div class="card-body">
+                    <img src="${prof_img_input.value}" class="w-100" alt="">
+                    <h6 style="color: rgb(162, 156, 156);" class="mt-1">1 min ago</h6>
+                    <h5>${title_input.value}</h5>
+                    <p>${body_input.value}</p>
+                    <hr>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                        <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+                    </svg>
+                    <span>
+                        (${title_input.value}) comments
+                    </span>
+                </div>
+            </div> 
+        `
+        document.querySelector(".posts").innerHTML+=card
+        localStorage.setItem("card",card)
+       // cards.push(card)
+        title_input.value="";
+        body_input.value="";
+        prof_img_input.value="";
+
+        document.querySelector(".add_post").style.visibility="hidden"
+
+        show_alert("The new post added","#1564bf")
+    }
+
+
+
+</script>
+</html>
